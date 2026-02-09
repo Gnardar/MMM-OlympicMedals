@@ -83,9 +83,20 @@ function parseWikipediaMedalTable(html) {
       const cells = $(row).find("th, td");
       if (cells.length < 5) return;
 
-      const rankText = cleanText($(cells[0]).text());
-      const countryCell = $(cells[1]);
-      const countryText = cleanText(countryCell.text());
+      let rankText = cleanText($(cells[0]).text());
+      let countryCell = $(cells[1]);
+      let countryText = cleanText(countryCell.text());
+
+      const rankIsNumber = /^[0-9]+$/.test(rankText);
+      const countryLooksNumber = /^[0-9]+$/.test(countryText);
+      const missingRankColumn = cells.length === 5 || (!rankIsNumber && countryLooksNumber);
+
+      if (missingRankColumn) {
+        // Row without rank cell (rowspan in rank column).
+        rankText = "";
+        countryCell = $(cells[0]);
+        countryText = cleanText(countryCell.text());
+      }
       let flagUrl = "";
       let noc = "";
 
@@ -109,10 +120,11 @@ function parseWikipediaMedalTable(html) {
       }
 
       const rank = rankText || lastRank;
-      const gold = parseInt(cleanText($(cells[2]).text()), 10) || 0;
-      const silver = parseInt(cleanText($(cells[3]).text()), 10) || 0;
-      const bronze = parseInt(cleanText($(cells[4]).text()), 10) || 0;
-      const total = parseInt(cleanText($(cells[5]).text()), 10) || gold + silver + bronze;
+      const offset = missingRankColumn ? 1 : 2;
+      const gold = parseInt(cleanText($(cells[offset]).text()), 10) || 0;
+      const silver = parseInt(cleanText($(cells[offset + 1]).text()), 10) || 0;
+      const bronze = parseInt(cleanText($(cells[offset + 2]).text()), 10) || 0;
+      const total = parseInt(cleanText($(cells[offset + 3]).text()), 10) || gold + silver + bronze;
 
       if (rank) lastRank = rank;
 
