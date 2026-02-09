@@ -25,27 +25,49 @@ function cleanText(text) {
     .trim();
 }
 
-function parseWikipediaMedalTable(html) {
-  const $ = cheerio.load(html);
-  let table = null;
+function normalizeHeader(text) {
+  return cleanText(text).toLowerCase();
+}
+
+function findMedalTable($) {
+  let best = null;
+  let bestScore = -1;
 
   $("table.wikitable").each((_, el) => {
     const headers = $(el)
       .find("tr")
       .first()
       .find("th")
-      .map((__, th) => cleanText($(th).text()))
+      .map((__, th) => normalizeHeader($(th).text()))
       .get();
 
-    const hasRank = headers.includes("Rank");
-    const hasNoc = headers.includes("NOC") || headers.includes("Nation") || headers.includes("Team");
+    const hasRank = headers.some((h) => h === "rank" || h === "place");
+    const hasNoc = headers.some((h) => h === "noc" || h === "nation" || h === "team" || h === "country");
+    const hasGold = headers.some((h) => h === "gold" || h === "g");
+    const hasSilver = headers.some((h) => h === "silver" || h === "s");
+    const hasBronze = headers.some((h) => h === "bronze" || h === "b");
+    const hasTotal = headers.some((h) => h === "total" || h === "t");
 
-    if (hasRank && hasNoc) {
-      table = el;
-      return false;
+    const score =
+      (hasRank ? 2 : 0) +
+      (hasNoc ? 2 : 0) +
+      (hasGold ? 1 : 0) +
+      (hasSilver ? 1 : 0) +
+      (hasBronze ? 1 : 0) +
+      (hasTotal ? 1 : 0);
+
+    if (score > bestScore) {
+      bestScore = score;
+      best = el;
     }
-    return undefined;
   });
+
+  return best;
+}
+
+function parseWikipediaMedalTable(html) {
+  const $ = cheerio.load(html);
+  const table = findMedalTable($);
 
   if (!table) {
     throw new Error("Medal table not found on Wikipedia page.");
@@ -59,7 +81,7 @@ function parseWikipediaMedalTable(html) {
     .slice(1)
     .each((_, row) => {
       const cells = $(row).find("th, td");
-      if (cells.length < 6) return;
+      if (cells.length < 5) return;
 
       const rankText = cleanText($(cells[0]).text());
       const countryText = cleanText($(cells[1]).text());
@@ -76,6 +98,8 @@ function parseWikipediaMedalTable(html) {
 
       if (rank) lastRank = rank;
 
+      if (!countryText) return;
+
       medals.push({
         rank,
         country: countryText,
@@ -85,6 +109,10 @@ function parseWikipediaMedalTable(html) {
         total
       });
     });
+
+  if (!medals.length) {
+    throw new Error("Medal table parsed but no rows found.");
+  }
 
   return medals;
 }
