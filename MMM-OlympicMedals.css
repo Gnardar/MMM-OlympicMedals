@@ -1,0 +1,29 @@
+﻿.mmm-om {
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.mmm-om__loading,
+.mmm-om__error {
+  font-style: italic;
+}
+
+.mmm-om__table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.mmm-om__table th,
+.mmm-om__table td {
+  padding: 4px 10px;
+  text-align: right;
+}
+
+.mmm-om__table th:nth-child(2),
+.mmm-om__table td:nth-child(2) {
+  text-align: left;
+}
+
+.mmm-om__g { color: #f4c542; }
+.mmm-om__s { color: #c0c0c0; }
+.mmm-om__b { color: #cd7f32; }

@@ -1,15 +1,15 @@
-﻿# MMM-OlympicsMedals
+﻿# MMM-OlympicMedals
 
 MagicMirror module that displays Olympic medal standings.
 
 ## Install
-1. Copy this folder into `MagicMirror/modules/` as `MMM-OlympicsMedals`.
+1. Copy this folder into `MagicMirror/modules/` as `MMM-OlympicMedals`.
 2. Run `npm install` inside the module folder.
 
 ## Configuration
 ```js
 {
-  module: "MMM-OlympicsMedals",
+  module: "MMM-OlympicMedals",
   position: "top_left",
   config: {
     updateInterval: 6 * 60 * 60 * 1000,

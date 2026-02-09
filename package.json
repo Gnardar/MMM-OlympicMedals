@@ -1,8 +1,8 @@
 ﻿{
-  "name": "mmm-olympicsmedals",
+  "name": "mmm-olympicmedals",
   "version": "0.1.0",
   "description": "MagicMirror module that displays Olympic medal standings.",
-  "main": "MMM-OlympicsMedals.js",
+  "main": "mmm-olympicmedals.js",
   "author": "",
   "license": "MIT",
   "dependencies": {
