@@ -84,7 +84,25 @@ function parseWikipediaMedalTable(html) {
       if (cells.length < 5) return;
 
       const rankText = cleanText($(cells[0]).text());
-      const countryText = cleanText($(cells[1]).text());
+      const countryCell = $(cells[1]);
+      const countryText = cleanText(countryCell.text());
+      let flagUrl = "";
+      let noc = "";
+
+      const abbr = cleanText(countryCell.find("abbr").first().text());
+      if (/^[A-Z]{3}$/.test(abbr)) {
+        noc = abbr;
+      }
+
+      const img = countryCell.find("img").first();
+      if (img && img.attr("src")) {
+        flagUrl = img.attr("src");
+        if (flagUrl.startsWith("//")) {
+          flagUrl = "https:" + flagUrl;
+        } else if (flagUrl.startsWith("/")) {
+          flagUrl = "https://en.wikipedia.org" + flagUrl;
+        }
+      }
 
       if (/^Totals?/i.test(rankText) || /^Totals?/i.test(countryText)) {
         return false;
@@ -103,6 +121,8 @@ function parseWikipediaMedalTable(html) {
       medals.push({
         rank,
         country: countryText,
+        noc,
+        flagUrl,
         gold,
         silver,
         bronze,

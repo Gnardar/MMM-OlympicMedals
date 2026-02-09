@@ -3,6 +3,16 @@
   line-height: 1.3;
 }
 
+.mmm-om--small { font-size: 14px; }
+.mmm-om--med { font-size: 18px; }
+.mmm-om--large { font-size: 22px; }
+
+.mmm-om__title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
 .mmm-om__loading,
 .mmm-om__error {
   font-style: italic;
@@ -22,6 +32,26 @@
 .mmm-om__table th:nth-child(2),
 .mmm-om__table td:nth-child(2) {
   text-align: left;
+}
+
+.mmm-om__country {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mmm-om__flag {
+  display: inline-block;
+  width: 18px;
+  height: 12px;
+  object-fit: cover;
+}
+
+.mmm-om--small .mmm-om__flag { width: 14px; height: 10px; }
+.mmm-om--large .mmm-om__flag { width: 22px; height: 16px; }
+
+.mmm-om__row--focus {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .mmm-om__g { color: #f4c542; }

@@ -12,10 +12,14 @@ MagicMirror module that displays Olympic medal standings.
   module: "MMM-OlympicMedals",
   position: "top_left",
   config: {
+    showTitle: true,
+    title: "Olympic Medals",
+    size: "med",
     updateInterval: 6 * 60 * 60 * 1000,
     countryLimit: 10,
     useTotal: true,
-    showFlags: false,
+    showFlags: true,
+    focusCountry: "Canada",
     apiUrl: "https://en.wikipedia.org/wiki/2026_Winter_Olympics_medal_table"
   }
 }
@@ -35,6 +39,13 @@ If you point `apiUrl` to a JSON endpoint, it should return either:
 
 or a JSON array of that shape.
 
+## Options
+- `showTitle`: show the title above the table.
+- `title`: text to display when `showTitle` is enabled.
+- `size`: `small`, `med`, or `large` for compactness.
+- `showFlags`: show country flags when available (Wikipedia pages provide them).
+- `focusCountry`: case-insensitive match of a country name or NOC code to highlight the row.
+
 ## Notes
 - Replace `apiUrl` with another Wikipedia medal table page to switch events.
-- `useTotal` and `showFlags` are reserved for future use.
+- `useTotal` is reserved for future use.
