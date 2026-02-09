@@ -1,0 +1,12 @@
+﻿{
+  "name": "mmm-olympicsmedals",
+  "version": "0.1.0",
+  "description": "MagicMirror module that displays Olympic medal standings.",
+  "main": "MMM-OlympicsMedals.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "node-fetch": "^3.3.2"
+  }
+}
