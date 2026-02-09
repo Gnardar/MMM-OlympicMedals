@@ -1,9 +1,12 @@
 ﻿# MMM-OlympicMedals
 
-MagicMirror module that displays Olympic medal standings.
+MagicMirror module that displays Olympic medal standings. This is a quick MVP as I did not see anything that was current. 
+
+<img width="316" height="283" alt="image" src="https://github.com/user-attachments/assets/5913935d-93ef-4f06-9f23-ecbe6e73523b" />
+
 
 ## Install
-1. Copy this folder into `MagicMirror/modules/` as `MMM-OlympicMedals`.
+1. Copy this folder into `MagicMirror/modules/` as `MMM-OlympicMedals`. git clone works great
 2. Run `npm install` inside the module folder.
 
 ## Configuration
@@ -36,6 +39,7 @@ If you point `apiUrl` to a JSON endpoint, it should return either:
   ]
 }
 ```
+
 
 or a JSON array of that shape.
 
